@@ -1,0 +1,141 @@
+basePath: /
+definitions:
+  models.Employee:
+    properties:
+      address:
+        type: string
+      name:
+        type: string
+      passport_number:
+        type: string
+      passport_serie:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+      task:
+        $ref: '#/definitions/models.Task'
+      uuid:
+        type: integer
+    type: object
+  models.EmployeeStore:
+    properties:
+      address:
+        type: string
+      name:
+        type: string
+      passport_number:
+        type: integer
+      passport_serie:
+        type: integer
+      patronymic:
+        type: string
+      surname:
+        type: string
+      uuid:
+        type: integer
+    type: object
+  models.GetAllUsersResponse:
+    properties:
+      response:
+        items:
+          $ref: '#/definitions/models.EmployeeStore'
+        type: array
+    type: object
+  models.Period:
+    properties:
+      firstDate:
+        type: string
+      secondDate:
+        type: string
+    type: object
+  models.Task:
+    properties:
+      UUID:
+        type: integer
+      period:
+        $ref: '#/definitions/models.Period'
+      timeCost:
+        type: string
+      title:
+        type: string
+      workTime:
+        $ref: '#/definitions/models.WorkTime'
+    type: object
+  models.WorkTime:
+    properties:
+      finish:
+        type: string
+      start:
+        type: string
+    type: object
+host: https://localhost:8080
+info:
+  contact: {}
+  description: API for control user's working time
+  title: Time Tracker
+  version: "1.0"
+paths:
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: get user info
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetAllUsersResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: integer
+        "404":
+          description: Not Found
+          schema:
+            type: integer
+        "500":
+          description: Internal Server Error
+          schema:
+            type: integer
+      summary: GetUserInfo
+      tags:
+      - get info
+  /users/create:
+    post:
+      consumes:
+      - application/json
+      description: create a user
+      parameters:
+      - description: user info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.Employee'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            type: integer
+        "404":
+          description: Not Found
+          schema:
+            type: integer
+        "500":
+          description: Internal Server Error
+          schema:
+            type: integer
+      summary: CreateUser
+      tags:
+      - create
+swagger: "2.0"

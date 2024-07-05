@@ -1,0 +1,216 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API for control user's working time",
+        "title": "Time Tracker",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "https://localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/users": {
+            "get": {
+                "description": "get user info",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "get info"
+                ],
+                "summary": "GetUserInfo",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GetAllUsersResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/create": {
+            "post": {
+                "description": "create a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "create"
+                ],
+                "summary": "CreateUser",
+                "parameters": [
+                    {
+                        "description": "user info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Employee"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Employee": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "passport_number": {
+                    "type": "string"
+                },
+                "passport_serie": {
+                    "type": "string"
+                },
+                "patronymic": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                },
+                "task": {
+                    "$ref": "#/definitions/models.Task"
+                },
+                "uuid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.EmployeeStore": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "passport_number": {
+                    "type": "integer"
+                },
+                "passport_serie": {
+                    "type": "integer"
+                },
+                "patronymic": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.GetAllUsersResponse": {
+            "type": "object",
+            "properties": {
+                "response": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.EmployeeStore"
+                    }
+                }
+            }
+        },
+        "models.Period": {
+            "type": "object",
+            "properties": {
+                "firstDate": {
+                    "type": "string"
+                },
+                "secondDate": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Task": {
+            "type": "object",
+            "properties": {
+                "UUID": {
+                    "type": "integer"
+                },
+                "period": {
+                    "$ref": "#/definitions/models.Period"
+                },
+                "timeCost": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "workTime": {
+                    "$ref": "#/definitions/models.WorkTime"
+                }
+            }
+        },
+        "models.WorkTime": {
+            "type": "object",
+            "properties": {
+                "finish": {
+                    "type": "string"
+                },
+                "start": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
